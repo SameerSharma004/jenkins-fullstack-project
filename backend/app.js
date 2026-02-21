@@ -13,14 +13,10 @@ const allowedOrigins = [
   "http://food-app-project-frontend.s3-website.ap-south-1.amazonaws.com/"
 ];
 
+const cors = require("cors");
+
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: true, // reflect request origin
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
@@ -50,3 +46,4 @@ const startServer = async () => {
 };
 
 startServer();
+
