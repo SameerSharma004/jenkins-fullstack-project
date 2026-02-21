@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-    nodejs 'node18'
+        nodejs 'node18'   // Must match Global Tool Configuration name
     }
 
     environment {
@@ -16,6 +16,9 @@ pipeline {
 
     stages {
 
+        // =========================
+        // CHECKOUT CODE
+        // =========================
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -23,27 +26,29 @@ pipeline {
             }
         }
 
-        // =========================foodapp
-        // DEPLOY BACKEND
+        // =========================
+        // DEPLOY BACKEND TO EC2
         // =========================
         stage('Deploy Backend to EC2') {
             steps {
                 sshagent(['ec2-key']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} '
-                        cd ${PROJECT_ROOT} &&
+                        set -e
 
+                        cd ${PROJECT_ROOT} &&
                         git pull origin main &&
 
                         cd backend &&
 
-                        # Fix ownership every time (safe production practice)
+                        # Ensure correct ownership
                         sudo chown -R ubuntu:ubuntu ${PROJECT_ROOT} &&
 
-                        # Clean install (better than npm install)
+                        # Clean dependency install
                         rm -rf node_modules &&
                         npm ci &&
 
+                        # Restart application
                         pm2 delete foodapp || true &&
                         pm2 start app.js --name foodapp &&
                         pm2 save
@@ -54,16 +59,19 @@ pipeline {
         }
 
         // =========================
-        // BUILD FRONTEND
+        // INSTALL FRONTEND DEPENDENCIES
         // =========================
         stage('Install Frontend Dependencies') {
             steps {
                 dir('frontend') {
-                    sh 'npm install'
+                    sh 'npm ci'
                 }
             }
         }
 
+        // =========================
+        // BUILD FRONTEND
+        // =========================
         stage('Build Frontend') {
             steps {
                 dir('frontend') {
@@ -82,10 +90,19 @@ pipeline {
                     credentialsId: 'aws-s3-creds'
                 ]]) {
                     sh '''
-                        aws s3 sync frontend/build/ s3://$S3_BUCKET --delete
+                        aws s3 sync frontend/build/ s3://$S3_BUCKET --delete --region $AWS_DEFAULT_REGION
                     '''
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Deployment Successful!"
+        }
+        failure {
+            echo "❌ Deployment Failed!"
         }
     }
 }
