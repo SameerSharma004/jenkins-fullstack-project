@@ -11,7 +11,7 @@ export default function MyOrder() {
         console.log('User email:', userEmail)
         
         try {
-            const response = await fetch("http://65.0.185.151:5000/api/myorderData", {
+            const response = await fetch("http://3.109.133.124:5000/api/myorderData", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

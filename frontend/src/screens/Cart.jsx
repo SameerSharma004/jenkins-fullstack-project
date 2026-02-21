@@ -42,7 +42,7 @@ const Cart = () => {
       }));
 
       // Use the globalFetch function
-      const result = await globalFetch('http://localhost:5000/api/orderData', {
+      const result = await globalFetch('http://3.109.133.124:5000/api/orderData', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
