@@ -52,36 +52,36 @@ pipeline {
         // =========================
         // BUILD FRONTEND
         // =========================
-        // stage('Install Frontend Dependencies') {
-        //     steps {
-        //         dir('frontend') {
-        //             sh 'npm install'
-        //         }
-        //     }
-        // }
+        stage('Install Frontend Dependencies') {
+            steps {
+                dir('frontend') {
+                    sh 'npm install'
+                }
+            }
+        }
 
-        // stage('Build Frontend') {
-        //     steps {
-        //         dir('frontend') {
-        //             sh 'npm run build'
-        //         }
-        //     }
-        // }
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    sh 'npm run build'
+                }
+            }
+        }
 
         // =========================
         // DEPLOY FRONTEND TO S3
         // =========================
-        // stage('Deploy Frontend to S3') {
-        //     steps {
-        //         withCredentials([[
-        //             $class: 'AmazonWebServicesCredentialsBinding',
-        //             credentialsId: 'aws-s3-creds'
-        //         ]]) {
-        //             sh '''
-        //                 aws s3 sync frontend/build/ s3://$S3_BUCKET --delete
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Deploy Frontend to S3') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-s3-creds'
+                ]]) {
+                    sh '''
+                        aws s3 sync frontend/build/ s3://$S3_BUCKET --delete
+                    '''
+                }
+            }
+        }
     }
 }
