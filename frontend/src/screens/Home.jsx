@@ -18,7 +18,7 @@ export default function Home() {
   const foodItems = [
     {
       _id: "101",
-      CategoryName: "Biryani/Rice",
+      CategoryName: "Sachit Biryani",
       name: "Veg Biryani",
       img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       options: [{ half: "150", full: "260" }],
