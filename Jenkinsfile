@@ -28,10 +28,17 @@ pipeline {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} '
                         cd ${PROJECT_ROOT} &&
+
                         git pull origin main &&
 
                         cd backend &&
-                        npm install &&
+
+                        # Fix ownership every time (safe production practice)
+                        sudo chown -R ubuntu:ubuntu ${PROJECT_ROOT} &&
+
+                        # Clean install (better than npm install)
+                        rm -rf node_modules &&
+                        npm ci &&
 
                         pm2 delete foodapp || true &&
                         pm2 start app.js --name foodapp &&
