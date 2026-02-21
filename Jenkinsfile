@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         EC2_HOST = '3.109.133.124'
-        PROJECT_ROOT = '/home/ubuntu/foodapp'
-        BACKEND_DIR = '/home/ubuntu/foodapp/backend'
+        PROJECT_ROOT = '/home/ubuntu/jenkins-fullstack-project'
+        BACKEND_DIR = '/home/ubuntu/jenkins-fullstack-project/backend'
 
         AWS_DEFAULT_REGION = 'ap-south-1'
         S3_BUCKET = 'food-app-project-frontend'
@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        // =========================
+        // =========================foodapp
         // DEPLOY BACKEND
         // =========================
         stage('Deploy Backend to EC2') {
