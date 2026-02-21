@@ -27,7 +27,7 @@ export default function Home() {
     {
       _id: "102",
       CategoryName: "Biryani/Rice",
-      name: "Chicken Biryani",
+      name: "Sachit Biryani",
       img: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmlyeWFuaXxlbnwwfHwwfHx8MA%3D%3D",
       options: [{ half: "180", full: "320" }],
       description: "Spicy chicken biryani with basmati rice."
