@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+    nodejs 'node18'
+    }
+
     environment {
         EC2_HOST = '3.109.133.124'
         PROJECT_ROOT = '/home/ubuntu/jenkins-fullstack-project'
