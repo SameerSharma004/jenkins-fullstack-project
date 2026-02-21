@@ -8,17 +8,9 @@ const OrderData = require('./Routes/OrderData');
 const app = express();
 const port = 5000;
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://food-app-project-frontend.s3-website.ap-south-1.amazonaws.com/"
-];
-
-const cors = require("cors");
-
 app.use(cors({
-  origin: true, // reflect request origin
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true
+  origin: "*", // reflect request origin
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }));
 
 app.options("*", cors()); // handle preflight
@@ -46,4 +38,5 @@ const startServer = async () => {
 };
 
 startServer();
+
 
